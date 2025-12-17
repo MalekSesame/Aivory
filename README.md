@@ -1,6 +1,8 @@
 # Aivory
 Chatbot LLM + RAG pour Recherche Intelligente dans des Documents
-## Comands  
+## Contexte 
+Aivory est un assistant IA intelligent capable d'exploiter des documents internes (PDF, documents texte) pour fournir des réponses contextuelles et précises aux utilisateurs.
+## les commandes Git  
 ```bash
 git clone https://github.com/MalekSesame/Aivory.git
 cd Aivory
