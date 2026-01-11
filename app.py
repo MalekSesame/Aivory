@@ -38,30 +38,42 @@ pdf_parser = PDFParser()
 def upload_pdf(file: UploadFile = File(...)):
     if not file.filename.endswith(".pdf"):
         raise HTTPException(status_code=400, detail="Only PDF files allowed")
-    
-    file_path = os.path.join(UPLOAD_DIR, file.filename)
 
-    # Sauvegarde du PDF
-    with open(file_path, "wb") as buffer:
+    pdf_path = os.path.join(UPLOAD_DIR, file.filename)
+
+    # Save PDF
+    with open(pdf_path, "wb") as buffer:
         shutil.copyfileobj(file.file, buffer)
 
-    # Extraire metadata et texte
-    metadata = pdf_parser.extract_metadata(file_path)
-    text = pdf_parser.extract_text(file_path)
+    # Extract
+    metadata = pdf_parser.extract_metadata(pdf_path)
+    text = pdf_parser.extract_text(pdf_path)
 
-    # Stocker le nom du fichier dans SQLite
+    # Save extracted text
+    text_filename = file.filename.replace(".pdf", ".txt")
+    text_path = os.path.join(UPLOAD_DIR, text_filename)
+
+    with open(text_path, "w", encoding="utf-8") as f:
+        f.write(text)
+
+    # Store in DB
     db = SessionLocal()
-    doc = Document(filename=file.filename)
+    doc = Document(
+        filename=file.filename,
+        pdf_path=pdf_path,
+        text_path=text_path
+    )
     db.add(doc)
     db.commit()
     db.close()
 
     return {
-        "message": "PDF uploaded successfully",
+        "message": "PDF uploaded and indexed",
         "filename": file.filename,
-        "metadata": metadata,
-        "text_preview": text[:200]  # juste un aperçu du texte
+        "pages": metadata.get("num_pages"),
+        "text_file": text_filename
     }
+
 
 class Question(BaseModel):
     question: str
