@@ -9,7 +9,10 @@ Base = declarative_base()
 
 class Document(Base):
     __tablename__ = "documents"
+
     id = Column(Integer, primary_key=True, index=True)
-    filename = Column(String, unique=True, index=True)
+    filename = Column(String)
+    pdf_path = Column(String)
+    text_path = Column(String)
 
 Base.metadata.create_all(bind=engine)
