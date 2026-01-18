@@ -1,0 +1,80 @@
+@startuml
+left to right direction
+
+title Vue Globale des Cas d'Utilisation\nSystème RAG Assistant
+
+actor "Utilisateur Final" as User
+actor "Administrateur Système" as Admin
+actor "Développeur API" as Dev
+actor "Système Batch" as Batch
+
+rectangle "Système RAG Assistant" {
+  (UC1: Upload Document) as UC1
+  (UC2: Poser Question) as UC2
+  (UC3: Visualiser Historique) as UC3
+  (UC4: Gérer Collections) as UC4
+  (UC5: Donner Feedback) as UC5
+  
+  (UC6: Configurer Système) as UC6
+  (UC7: Monitorer Performance) as UC7
+  (UC8: Gérer Utilisateurs) as UC8
+  (UC9: Voir Logs) as UC9
+  
+  (UC10: Consommer API) as UC10
+  (UC11: Tester Intégration) as UC11
+  (UC12: Gérer Clés API) as UC12
+  
+  (UC13: Indexation Automatique) as UC13
+  (UC14: Nettoyage Données) as UC14
+  (UC15: Génération Rapports) as UC15
+}
+
+' Associations Utilisateur Final
+User --> UC1
+User --> UC2
+User --> UC3
+User --> UC4
+User --> UC5
+
+' Associations Administrateur
+Admin --> UC6
+Admin --> UC7
+Admin --> UC8
+Admin --> UC9
+
+' Associations Développeur API
+Dev --> UC10
+Dev --> UC11
+Dev --> UC12
+
+' Associations Système Batch
+Batch --> UC13
+Batch --> UC14
+Batch --> UC15
+
+' Relations entre cas d'utilisation
+UC2 .> UC1 : include
+UC3 .> UC2 : include
+UC7 .> UC9 : extend
+UC13 .> UC14 : include
+
+note bottom of User
+  <b>Utilisateur Final :</b>
+  Interagit via l'interface web
+  pour la recherche documentaire
+end note
+
+note right of Admin
+  <b>Administrateur :</b>
+  Gère configuration, monitoring
+  et maintenance du système
+end note
+
+legend bottom
+  <b>Légende :</b>
+  Acteur principal → Cas d'utilisation
+  --> Association standard
+  .> Extension/Inclusion
+end legend
+
+@enduml

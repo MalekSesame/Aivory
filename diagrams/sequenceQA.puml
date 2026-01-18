@@ -1,0 +1,42 @@
+@startuml
+title Diagramme de séquence - Flux Question/Réponse
+
+participant U as "Utilisateur"
+participant F as "Frontend"
+participant G as "API Gateway"
+participant A as "Auth Service"
+participant C as "Cache Service"
+participant R as "RAG Service"
+participant V as "Vector DB"
+participant L as "LLM Service"
+participant D as "Metadata DB"
+
+U ->> F : 1. Saisie requête
+F ->> G : 2. POST /api/query (JWT)
+G ->> A : 3. Validation token
+A -->> G : 4. Token valide
+G ->> C : 5. Recherche cache
+
+alt Cache Hit
+    C -->> G : 6. Réponse disponible
+    G -->> F : 7. Retour immédiat
+    F -->> U : 8. Affichage
+else Cache Miss
+    C -->> G : 6. Cache vide
+    G ->> R : 7. Transmission requête
+    R ->> R : 8. Prétraitement
+    R ->> R : 9. Génération embedding
+    R ->> V : 10. Recherche vectorielle
+    V -->> R : 11. Top résultats
+    R ->> D : 12. Récupération infos
+    D -->> R : 13. Données documents
+    R ->> L : 14. Appel LLM
+    L -->> R : 15. Réponse
+    R ->> C : 16. Stockage réponse
+    C -->> R : 17. Confirmé
+    R -->> G : 18. Retour réponse
+    G -->> F : 19. Transmission
+    F -->> U : 20. Affichage + sources
+end
+
+@enduml

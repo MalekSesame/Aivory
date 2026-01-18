@@ -1,0 +1,93 @@
+@startuml
+title Diagramme de Classes Principal
+
+package "Modèles de Base" {
+  class Utilisateur {
+    - id : UUID
+    - email : String
+    - username : String
+    - role : RôleUtilisateur
+    - created_at : DateTime
+    + authenticate(motdepasse: String) : Boolean
+    + has_permission(perm: String) : Boolean
+  }
+  
+  class Document {
+    - id : UUID
+    - user_id : UUID
+    - filename : String
+    - file_size : Integer
+    - status : StatutDocument
+    - chunk_count : Integer
+    + get_chunks() : List<FragmentDocument>
+    + update_status(status: StatutDocument) : void
+  }
+  
+  class FragmentDocument {
+    - id : UUID
+    - document_id : UUID
+    - text : String
+    - embedding : List<Float>
+    - metadata : Map<String, Object>
+    + get_embedding() : List<Float>
+    + to_dict() : Map<String, Object>
+  }
+}
+
+package "Couche Service" {
+  interface ExtracteurTexte {
+    + extract(chemin_fichier: String) : String
+  }
+  
+  interface DiviseurTexte {
+    + split(texte: String) : List<FragmentDocument>
+  }
+  
+  interface GénérateurEmbedding {
+    + generate(textes: List<String>) : List<List<Float>>
+  }
+  
+  class ProcesseurDocument {
+    - extracteur : ExtracteurTexte
+    - diviseur : DiviseurTexte
+    - générateur : GénérateurEmbedding
+    + process(chemin_fichier: String) : RésultatTraitement
+  }
+  
+  class ServiceRAG {
+    - stockage_vectoriel : StockageVecteur
+    - service_llm : ServiceLLM
+    - service_cache : ServiceCache
+    + query(requête: String) : RésultatRequête
+    + search_similar(embedding_requête: List<Float>) : List<Fragment>
+  }
+}
+
+package "Accès Données" {
+  interface RépositoryVecteur {
+    + add_vectors(vecteurs: List<Vecteur>) : void
+    + search(requête: Vecteur, k: Integer) : List<RésultatRecherche>
+    + delete_vectors(ids: List<String>) : void
+  }
+  
+  interface RépositoryDocument {
+    + create(document: Document) : UUID
+    + get_by_id(id: UUID) : Optional<Document>
+    + update(document: Document) : void
+  }
+}
+
+' Relations principales
+Utilisateur "1" -- "*" Document : "possède"
+Document "1" -- "*" FragmentDocument : "contient"
+ProcesseurDocument --> ExtracteurTexte : "utilise"
+ProcesseurDocument --> DiviseurTexte : "utilise"
+ProcesseurDocument --> GénérateurEmbedding : "utilise"
+ServiceRAG --> RépositoryVecteur : "utilise"
+ServiceRAG --> RépositoryDocument : "utilise"
+
+note right of ProcesseurDocument
+  <b>Orchestrateur du traitement</b>\ndes documents
+end note
+
+@enduml
