@@ -1,4 +1,7 @@
 .env
+venv/
+.env/
 __pycache__/
 uploads/
 *.db
+*.pyc
