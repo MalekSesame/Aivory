@@ -1,0 +1,60 @@
+@startuml
+left to right direction
+
+title Vue Globale des Cas d'Utilisation - Utilisateur\Système RAG 
+
+actor "Utilisateur" as User
+actor "Système RAG" as SystemRAG
+
+rectangle "Système RAG Assistant" {
+  (Configurer le dossier des documents) as UC1
+  (Poser des questions) as UC2
+  (Visualiser l'historique) as UC3
+  (Vider l'historique) as UC6
+  (Upload document) as UC4
+  (Donner Feedback) as UC5
+  
+    
+  (Indexation automatique) as UC13
+  (Nettoyage des données) as UC14
+}
+
+' Associations Utilisateur Final
+User --> UC1
+User --> UC2
+User --> UC3
+User --> UC4
+User --> UC5
+User --> UC6
+
+
+' Associations Système RAG
+SystemRAG --> UC13
+SystemRAG --> UC14
+
+
+' Relations entre cas d'utilisation
+UC2 .> UC1 : include
+UC3 .> UC2 : include
+
+
+note bottom of User
+  <b>Utilisateur :</b>
+  Interagit via l'interface web
+  pour la recherche documentaire
+end note
+
+note bottom of SystemRAG
+  <b>Système RAG :</b>
+  Composants backend pour
+  l'indexation et la recherche
+end note
+
+legend bottom
+  <b>Légende :</b>
+  Acteur principal → Cas d'utilisation
+  --> Association standard
+  .> Extension/Inclusion
+end legend
+
+@enduml

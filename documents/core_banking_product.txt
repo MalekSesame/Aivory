@@ -1,0 +1,7 @@
+Plateforme bancaire NovaCore
+
+NovaCore est une plateforme bancaire modulaire développée en Java et Spring Boot.
+Elle prend en charge la gestion des clients, la gestion du cycle de vie des comptes et le traitement des transactions.
+
+La plateforme s’intègre avec des systèmes externes via des services web REST et SOAP.
+Les bases de données Oracle et PostgreSQL sont supportées.

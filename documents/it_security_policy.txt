@@ -1,0 +1,9 @@
+NovaBank Solutions – Politique de sécurité informatique
+
+Tous les employés doivent utiliser des mots de passe robustes d’une longueur minimale de 12 caractères.
+Les mots de passe doivent être changés tous les 90 jours.
+
+L’accès aux systèmes de production est limité au personnel autorisé uniquement.
+L’authentification multi-facteurs (MFA) est obligatoire pour le VPN et les services cloud.
+
+Les données sensibles des clients doivent être cryptées au repos et en transit.

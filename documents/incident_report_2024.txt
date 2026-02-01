@@ -1,0 +1,10 @@
+Rapport d’incident – Mars 2024
+
+Le 14 mars 2024, NovaBank Solutions a rencontré une interruption de service
+due à un certificat TLS expiré sur l’API de paiements.
+
+Le problème a entraîné des échecs de transactions pendant environ 45 minutes.
+L’incident a été résolu en renouvelant le certificat et en redémarrant le service.
+
+Les actions préventives incluent la mise en place d’un suivi automatique des certificats
+et des alertes avant leur expiration.

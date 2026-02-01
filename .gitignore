@@ -1,20 +1,13 @@
-# Environnement
-venv/
+# Dependencies
+node_modules/
 .env
 .env.local
-.env.*.local
-venv311/
 
-
-# Data
-data/
-uploads/
-vector_store/
-models/
-
-# Logs
-*.log
-logs/
+# Build outputs
+dist/
+build/
+*.o
+*.a
 
 # IDE
 .vscode/
@@ -22,29 +15,14 @@ logs/
 *.swp
 *.swo
 
-# Python
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-
 # OS
 .DS_Store
 Thumbs.db
-EOF
+
+# Logs
+*.log
+npm-debug.log*
+
+# Temporary files
+*.tmp
+*.temp

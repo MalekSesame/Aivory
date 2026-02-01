@@ -1,0 +1,6 @@
+Les perspectives de l'annee 2026 por NovaBan est la Transformation Digitale. Son objectif est de :
+- Digitaliser 80% des processus client d'ici fin 2026
+- Migration complète vers le cloud (Azure) : Q2 2025
+- Lancement NovaPay (paiement instantané) : Q3 2025
+- IA conversationnelle avancée : Q1 2026
+- Portefeuille digital 100% mobile : Q4 2026
